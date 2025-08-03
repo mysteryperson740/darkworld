@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dark World</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .access-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+    }
+    .access-container h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    .access-container input {
+      padding: 15px;
+      font-size: 1.5em;
+      width: 300px;
+      text-align: center;
+      border: none;
+      background: #000;
+      color: #0f0;
+      border: 2px solid #0f0;
+    }
+    .hidden {
+      display: none;
+    }
+    .content {
+      display: none;
+      padding: 20px;
+      text-align: center;
+      z-index: 10;
+      position: relative;
+    }
+    .content h2 {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrixCanvas"></canvas>
+  <div class="access-container" id="accessContainer">
+    <h1>Enter Dark World Access Code</h1>
+    <input type="text" id="passcodeInput" placeholder="Type Access Code" />
+  </div>
+  <div class="content" id="darkContent">
+    <h2>🕶️ Welcome to Dark World 🕶️</h2>
+    <p>Cartel Bosses | Assassin Contracts | Secret Files</p>
+    <p>Stay in the shadows...</p>
+  </div>
+
+  <script>
+    // Matrix code rain effect
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    const letters = '01';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px monospace';
+      drops.forEach((y, i) => {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, y * fontSize);
+        drops[i] = y * fontSize > canvas.height && Math.random() > 0.975 ? 0 : y + 1;
+      });
+    }
+
+    setInterval(draw, 33);
+
+    // Access Code Logic
+    const accessContainer = document.getElementById('accessContainer');
+    const darkContent = document.getElementById('darkContent');
+    const passcodeInput = document.getElementById('passcodeInput');
+
+    passcodeInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        if (passcodeInput.value.toLowerCase() === 'darkworld') {
+          accessContainer.classList.add('hidden');
+          darkContent.style.display = 'block';
+        } else {
+          alert('ACCESS DENIED. You are being traced...');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
