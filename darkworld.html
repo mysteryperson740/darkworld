@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DarkWorld Prank</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: #0f0;
+      font-family: monospace;
+      overflow: hidden;
+    }
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 1.2em;
+      background: black;
+      border: 2px solid #0f0;
+      color: #0f0;
+    }
+    .hidden { display: none; }
+    .file-list, .file-content, .chat, .chat-input { margin-top: 20px; }
+    .file { cursor: pointer; text-decoration: underline; margin: 5px 0; }
+    .file-content {
+      background: #000; border: 1px solid #0f0; padding: 10px;
+      white-space: pre-wrap; max-height: 300px; overflow-y: auto;
+    }
+    .chat {
+      border: 1px solid #0f0; padding: 10px; height: 200px;
+      overflow-y: auto; background: rgba(0,0,0,0.7);
+    }
+    .chat-input {
+      width: calc(100% - 20px); padding: 10px;
+      background: black; border: 2px solid #0f0; color: #0f0;
+    }
+    .alert-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: red; color: white; display: flex; align-items: center;
+      justify-content: center; font-size: 2em; flex-direction: column;
+      display: none; z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+<div class="centered" id="loginScreen">
+  <h1>Enter DarkWorld Access Code</h1>
+  <input type="text" id="accessCode" placeholder="Access Code">
+  <button onclick="verifyCode()">Enter</button>
+</div>
+
+<div class="centered hidden" id="usernameScreen">
+  <h1>Enter Your Username</h1>
+  <input type="text" id="usernameInput" placeholder="Username">
+  <button onclick="enterDarkWorld()">Proceed</button>
+</div>
+
+<div class="hidden" id="mainContent" style="padding: 20px;">
+  <h1>🕶️ Welcome to DarkWorld 🕶️</h1>
+  <div class="file-list">
+    <h2>Secret Files:</h2>
+    <div class="file" onclick="showFile('file1')">Assassination Contracts.txt</div>
+    <div class="file" onclick="showFile('file2')">Cartel Drug Routes.docx</div>
+    <div class="file" onclick="showFile('file3')">Black Market Organ Trade.pdf</div>
+    <div class="file" onclick="showFile('file4')">CIA UFO Reports.zip</div>
+    <div class="file" onclick="showFile('file5')">Murder Theories.pptx</div>
+    <div class="file" onclick="showFile('file6')">Bitcoin Wallets.xlsx</div>
+    <div class="file" onclick="fakeDownload()">Download DarkWorld Database.exe</div>
+  </div>
+  <div class="file-content" id="fileContent"></div>
+
+  <div class="chat" id="chatBox">
+    <p><em>Welcome to DarkWorld Chat. Stay in the shadows...</em></p>
+  </div>
+  <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeypress="sendMessage(event)">
+</div>
+
+<div class="alert-screen" id="alertScreen">
+  🚨 HACK ALERT 🚨<br>
+  Your Device is being HACKED!<br>
+  Sending data to unknown server...<br>
+  <button onclick="closeAlert()">Abort</button>
+</div>
+
+<script>
+  function verifyCode() {
+    const code = document.getElementById('accessCode').value;
+    if (code.toLowerCase() === 'darkworld') {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('usernameScreen').classList.remove('hidden');
+    } else {
+      alert('ACCESS DENIED. Tracing your location...');
+      document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:20%;">Location sent to Cyber Crime Authorities 🚨</h1>';
+    }
+  }
+
+  let username = '';
+  function enterDarkWorld() {
+    username = document.getElementById('usernameInput').value;
+    if (username.trim() === '') {
+      alert('Enter a valid username');
+      return;
+    }
+    document.getElementById('usernameScreen').classList.add('hidden');
+    document.getElementById('mainContent').classList.remove('hidden');
+  }
+
+  function showFile(fileName) {
+    const files = {
+      'file1': 'TARGET: John Doe\nFEE: $500,000\nLocation: Unknown\nStatus: Pending...',
+      'file2': 'Route A: Colombia -> Mexico -> USA\nRoute B: Afghanistan -> Russia -> Europe',
+      'file3': 'Black Market Organ Dealers:\n1. Organ King (Ukraine)\n2. The Surgeon (Brazil)',
+      'file4': 'CIA UFO Report:\n- Incident: Roswell 1947\n- Status: Classified\n- Encryption: 256-bit AES',
+      'file5': 'Murder Theories:\n1. Political Setup\n2. Media Cover-up\n3. Inside Job Conspiracy',
+      'file6': 'Bitcoin Wallets:\nWallet 1: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2\nWallet 2: 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy'
+    };
+    document.getElementById('fileContent').textContent = files[fileName] || 'File not found.';
+  }
+
+  function sendMessage(event) {
+    if (event.key === 'Enter') {
+      const msg = document.getElementById('chatInput').value;
+      if (msg.trim() !== '') {
+        const chatBox = document.getElementById('chatBox');
+        const p = document.createElement('p');
+        p.innerHTML = `<strong>${username}:</strong> ${msg}`;
+        chatBox.appendChild(p);
+        document.getElementById('chatInput').value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+  }
+
+  function fakeDownload() {
+    document.getElementById('alertScreen').style.display = 'flex';
+  }
+
+  function closeAlert() {
+    document.getElementById('alertScreen').style.display = 'none';
+    alert('System Breach Prevented.');
+  }
+</script>
+
+</body>
+</html>
